@@ -4,12 +4,13 @@
 
 # Site
 title: byhj Blog
-subtitle: 追忆似水年华
-description:
+subtitle: 
+description: 追忆似水年华
 author: byhj
 email: binyuapple@163.com
-language: zh-CN
+language: zh-Hans
 timezone:
+avatar: /images/byhj.png
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
