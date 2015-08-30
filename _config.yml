@@ -73,3 +73,18 @@ deploy:
   type: git
   repository: https://github.com/byhj/byhj.github.io.git
   branch: master
+  
+index_generator:
+  per_page: 5
+
+archive_generator:
+  per_page: 20
+  yearly: true
+  monthly: true
+
+tag_generator:
+  per_page: 10
+  
+ # Social links
+social:
+  github: https://github.com/byhj

@@ -1,8 +1,8 @@
 # when running hexo in a subdirectory (e.g. domain.tld/blog), remove leading slashes ( "/archives" -> "archives" )
 menu:
   home: /
-  #categories: /categories
-  #about: /about
+  categories: /categories
+  about: /about
   archives: /archives
   tags: /tags
   #commonweal: /404.html
@@ -90,3 +90,8 @@ images: images
 
 # Theme version
 version: 0.4.5.1
+
+
+auto_excerpt:
+  enable: true
+  length: 300
