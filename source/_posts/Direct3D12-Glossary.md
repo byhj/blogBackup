@@ -1,6 +1,6 @@
 title: Direct3D12-Glossary
 date: 2015-09-15 10:02:30
-tags:
+tags: DirectX
 ---
 These terms are distinctive of Direct3D 12.
 

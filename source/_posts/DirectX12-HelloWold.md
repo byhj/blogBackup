@@ -1,4 +1,7 @@
 title: DirectX12-Hello World
+date: 2015-09-01 08:50:17
+tags: DirectX
+
 ---
 DirectX12 Hello World.
 
