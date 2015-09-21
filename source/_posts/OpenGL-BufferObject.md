@@ -4,21 +4,20 @@ tags: OpenGL
 
 ---
 # Introdution
-Buffer Objects ÊÇ´æ´¢OpenGL Context(GPU)·ÖÅäµÄÒ»×é·Ç¸ñÊ½»¯ÄÚ´æµÄOpenGL Objects. ÕâĞ©ÄÚ´æÄÜ¹»ÓÃÀ´´æ´¢¶¥µãÊı¾İ£¬Í¼Ïñ»òÕßÖ¡»º´æ·µ»ØµÄÏñËØÊı¾İºÍÆäËüÊı¾İ¡£
+Buffer Objectsæ˜¯å­˜å‚¨OpenGL Context(GPU)åˆ†é…çš„ä¸€ç»„éæ ¼å¼åŒ–å†…å­˜çš„OpenGL Objects. è¿™äº›å†…å­˜èƒ½å¤Ÿç”¨æ¥å­˜å‚¨é¡¶ç‚¹æ•°æ®ï¼Œå›¾åƒæˆ–è€…å¸§ç¼“å­˜è¿”å›çš„åƒç´ æ•°æ®å’Œå…¶å®ƒæ•°æ®ã€‚
  
 # Creation
-Buffer Objects ÊÇOpenGL Objects,ËùÒÔËüÃÇ×ñÑ­ËùÓĞOpenGL ObjectsµÄ¹æ¶¨¡£ÄãÄÜÊ¹ÓÃglGenBuffersc´´½¨Buffer Objects, Ê¹ÓÃglDeleteBuffersÉ¾³ıËüÃÇ¡£ÕâĞ©¶¼ÊÇ´ó¶àÊıOpenGL ObjectÊ¹ÓÃµÄ±ê×¼Éú³ÉºÍ´´½¨ObjectsµÄÄ£Ê½¡£
+Buffer Objectsæ˜¯OpenGL Objects,æ‰€ä»¥å®ƒä»¬éµå¾ªæ‰€æœ‰OpenGL Objectsçš„è§„å®šã€‚ä½ èƒ½ä½¿ç”¨glGenBufferscåˆ›å»ºBuffer Objects, ä½¿ç”¨glDeleteBuffersåˆ é™¤å®ƒä»¬ã€‚è¿™äº›éƒ½æ˜¯å¤§å¤šæ•°OpenGL Objectä½¿ç”¨çš„æ ‡å‡†ç”Ÿæˆå’Œåˆ›å»ºObjectsçš„æ¨¡å¼ã€‚
 ``` 
 void glBindBuffer(enum target, uint bufferName);
 ```
-Buffer Objects´æ´¢µÄÊÇÈÎÒâ´óĞ¡µÄÏßĞÔÄÚ´æÊı×é£¬ÕâĞ©ÄÚ´æÔÚÊ¹ÓÃÇ°ĞèÒª±»·ÖÅä£¬ÓĞÁ½ÖÖÎªBuffer Objects ·ÖÅäÄÚ´æµÄ·½·¨£º¿É±ä»òÕß²»¿É±ä¡£Îªbuffer·ÖÅä²»¿É±äÄÚ´æ»á¸Ä±äÄã¸úBuffer Object½»»¥µÄ·½Ê½¡£
+Buffer Objectså­˜å‚¨çš„æ˜¯ä»»æ„å¤§å°çš„çº¿æ€§å†…å­˜æ•°ç»„ï¼Œè¿™äº›å†…å­˜åœ¨ä½¿ç”¨å‰éœ€è¦è¢«åˆ†é…ï¼Œæœ‰ä¸¤ç§ä¸ºBuffer Objects åˆ†é…å†…å­˜çš„æ–¹æ³•ï¼šå¯å˜æˆ–è€…ä¸å¯å˜ã€‚ä¸ºbufferåˆ†é…ä¸å¯å˜å†…å­˜ä¼šæ”¹å˜ä½ è·ŸBuffer Objectäº¤äº’çš„æ–¹å¼ã€‚
 
 ## Immutable Storage
-Buffer Objects±»·ÖÅäÎª²»¿É±ä·½Ê½Ê±£¬Äã²»ÄÜÎªÕâ¸öBufferÖØĞÂ·ÖÅäÄÚ´æ¡£Ê¹ÓÃexplicit invalidation
-command »òÕßmapping the buffer.
+Buffer Objectsè¢«åˆ†é…ä¸ºä¸å¯å˜æ–¹å¼æ—¶ï¼Œä½ ä¸èƒ½ä¸ºè¿™ä¸ªBufferé‡æ–°åˆ†é…å†…å­˜ã€‚ä½¿ç”¨explicit invalidation
+command æˆ–è€…mapping the buffer.
 ``` 
-void glBufferStorage?(GLenum target?, GLsizeiptr size?, 
-                     const GLvoid * data?, GLbitfield flags?);
+void glBufferStorage(GLenum target, GLsizeiptr size, const GLvoid * data, GLbitfield flags);
 ```
 ### Immutable access methods
 - Writing to the buffer with any rendering pipeline process. These include Transform Feedback, Image Load Store, Atomic Counter, and Shader Storage Buffer Object. Basically, anything that is part of the rendering pipeline that can write to a buffer will always work.
@@ -35,25 +34,58 @@ Invalidating the buffer. This only wipes out the contents of the buffer, so it i
 ---
 
 # Data Specification
-ÒòÎªglBufferData¿ÉÒÔÓÃÀ´¸üĞÂÊı¾İ£¬Ò²¿ÉÒÔ·ÖÅäÄÚ´æ¿Õ¼ä£¬ËùÒÔ²¢²»ÊÊºÏ¸üĞÂÄÇĞ©ÒÑ¾­·ÖÅäÄÚ´æµÄÊı¾İ£¨Õâ¶ÔÓÚimmutable storage buffersÊÇ²»¿ÉÄÜµÄ£©
+å› ä¸ºglBufferDataåœ¨åˆ†é…å†…å­˜ç©ºé—´åŒæ—¶æ›´æ–°æ•°æ®ï¼Œæ‰€ä»¥å¹¶ä¸é€‚åˆæ›´æ–°é‚£äº›å·²ç»åˆ†é…å†…å­˜çš„æ•°æ®ï¼ˆè¿™å¯¹äºimmutable storage buffersæ˜¯ä¸å¯èƒ½çš„ï¼‰
 
-ÎÒÃÇ¿ÉÒÔÊ¹ÓÃÏÂÃæµÄº¯ÊıÈ¥¸üĞÂbuffer²¿·ÖµÄÊı¾İ£º
+æˆ‘ä»¬å¯ä»¥ä½¿ç”¨ä¸‹é¢çš„å‡½æ•°å»æ›´æ–°bufferéƒ¨åˆ†çš„æ•°æ®ï¼š
 ``` 
-void glBufferSubData?(enum target, intptr offset, sizeiptr size,  const void *data)
+void glBufferSubData(enum target, intptr offset, sizeiptr size,  const void *data)
 ```
 ## Clearing
-Buffer objects ÄÚ´æÄÜ¹»±»²¿·Ö»òÈ«²¿Çå³ıÎªÖ¸¶¨µÄÖµ¡£ÕâĞ©º¯ÊıµÄ¹¤×÷Ô­ÀíÓëPixel Transfer²Ù×÷ÀàËÆ¡£
+Buffer objects å†…å­˜èƒ½å¤Ÿè¢«éƒ¨åˆ†æˆ–å…¨éƒ¨æ¸…é™¤ä¸ºæŒ‡å®šçš„å€¼ã€‚è¿™äº›å‡½æ•°çš„å·¥ä½œåŸç†ä¸Pixel Transferæ“ä½œç±»ä¼¼ã€‚
 ``` 
-void glClearBufferData?(GLenum target??, GLenum internalformat?, GLenum format?, 
-                       GLenum type?, const void * data?);
-void glClearBufferSubData?(GLenum target?, GLenum internalformat?, GLintptr offset?, 
-                          GLsizeiptr size?, GLenum format?, GLenum type?, const void * data?);
+void glClearBufferData(GLenum target, GLenum internalformat, GLenum format, GLenum type, const void * data);
+void glClearBufferSubData(GLenum target, GLenum internalformat, GLintptr offset,  GLsizeiptr size, GLenum format, GLenum type, const void * data);
 ```
+ä¸€ä¸ªæ¸…é™¤å…¨éƒ¨å†…å®¹ï¼Œä¸€ä¸ªæ¸…é™¤éƒ¨åˆ†å†…å®¹
+
 ## Copying
-Ò»¸öbufferµÄÊı¾İ¿ÉÒÔ±»¸´ÖÆµ½ÁíÒ»¸öbuffer£¬ÎÒÃÇÎªÔ´ºÍÄ¿±êbuffer°ó¶¨²»Í¬µÄtarget, Ò»°ãÊ¹ÓÃGL_COPY_READ_BUFFER GL_COPY_WRITE_BUFFER
+ä¸€ä¸ªbufferçš„æ•°æ®å¯ä»¥è¢«å¤åˆ¶åˆ°å¦ä¸€ä¸ªbufferï¼Œæˆ‘ä»¬ä¸ºæºå’Œç›®æ ‡bufferç»‘å®šä¸åŒçš„target, ä¸€èˆ¬ä½¿ç”¨GL_COPY_READ_BUFFER GL_COPY_WRITE_BUFFERä½œä¸ºç›¸åº”çš„æ ‡å¿—ã€‚
+```
+void glCopyBufferSubDataâ€‹(GLenum readtargetâ€‹, GLenum writetargetâ€‹, GLintptr readoffsetâ€‹,GLintptr writeoffsetâ€‹, GLsizeiptr sizeâ€‹);
+```
+readtargetæ˜¯ç»‘å®šåˆ°source bufferä¸Šçš„buffer, è¿™æ˜¯å¤åˆ¶æ•°æ®çš„æä¾›è€…ï¼Œwritetarget æ˜¯ç»‘å®šåˆ°destination bufferçš„bufferï¼Œæ˜¯å¤åˆ¶æ•°æ®çš„æ¥å—è€…ã€‚
+
+## Mapping
+å¯¹äºä¸€èˆ¬æƒ…å†µæ¥è¯´ï¼ŒglBufferSubDataæ˜¯ä¸€ç§å¾ˆå¥½çš„æ›´æ–°æ•°æ®æ–¹å¼ã€‚ä½†æœ‰æ—¶å–å†³ä½ çš„ä½¿ç”¨æ–¹å¼ï¼Œå®ƒçš„æ€§èƒ½ä¼šå‡ä½ã€‚ä¾‹å¦‚ï¼Œä½ çš„ç®—æ³•ç”Ÿæˆäº†ä¸€äº›å°†è¦å­˜å‚¨è‡³buffer objectçš„æ•°æ®ï¼Œä½ é¦–å…ˆå¿…é¡»ä¸ºè¿™äº›æ•°æ®åˆ†é…æš‚æ—¶çš„å­˜å‚¨åŒºï¼Œç„¶åä½¿ç”¨glBufferSubDataå‡½æ•°å¤åˆ¶åˆ°OpenGLç®¡ç†çš„å†…å­˜ã€‚å½“ä½ æƒ³è¦å°†æ•°æ®å†™å›æ—¶ï¼ŒglGetBufferSubDataä¹Ÿè®¸å¹¶ä¸æ˜¯ä½ æƒ³è¦çš„æ–¹å¼ï¼Œ è™½ç„¶å®ƒçœ‹èµ·æ¥åŠŸèƒ½ç›¸åƒã€‚å¦‚æœä½ èƒ½å¾—åˆ°ä¸€ä¸ªæŒ‡å‘buffer objectå­˜å‚¨åŒºçš„æŒ‡é’ˆï¼Œç„¶åç›´æ¥å†™å…¥ï¼Œè¿™æ ·çš„æ–¹å¼ä¼šéå¸¸å¥½ã€‚
+ä¸ºäº†è¾¾åˆ°ä¸Šé¢æ‰€è¯´çš„æ•ˆæœï¼Œä½ å¿…é¡»å¯¹bufferè¿›è¡Œæ˜ å°„ä»¥å¾—åˆ°ä¸€ä¸ªæŒ‡å‘å¯è¯»å†™bufferå†…å­˜çš„æŒ‡é’ˆã€‚
+```
+void *glMapBufferRangeâ€‹(GLenum targetâ€‹, GLintptr offsetâ€‹, GLsizeiptr lengthâ€‹,GLbitfield accessâ€‹);
+```
 
 ---
 # General use
+- GL_ARRAY_BUFFER
+- GL_ELEMENT_ARRAY_BUFFER
+- GL_COPY_READ_BUFFER & GL_COPY_WRITE_BUFFER
+- GL_PIXEL_UNPACK_BUFFER & GL_PIXEL_PACK_BUFFER
+- GL_QUERY_BUFFER
+- GL_TEXTURE_BUFFER
+- GL_TRANSFORM_FEEDBACK_BUFFER
+- GL_UNIFORM_BUFFER
+- GL_DRAW_INDIRECT_BUFFER
+- GL_ATOMIC_COUNTER_BUFFER
+- GL_DISPATCH_INDIRECT_BUFFER
+- GL_SHADER_STORAGE_BUFFER
+
+##Binding indexed targets
+```
+ void glBindBufferRangeâ€‹(GLenum targetâ€‹, GLuint indexâ€‹, GLuint bufferâ€‹,  GLintptr offsetâ€‹, GLsizeiptr sizeâ€‹ );
+```
+
+## Multibind and indexed targets
+```
+void glBindBuffersRangeâ€‹(GLenum targetâ€‹, GLuint firstâ€‹, GLsizei countâ€‹, const GLuint *buffersâ€‹, const GLintptr *offsetsâ€‹, const GLintptr *sizesâ€‹);
+```
 
 ---
 # Reference
