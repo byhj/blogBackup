@@ -13,6 +13,8 @@ void glBindBuffer(enum target, uint bufferName);
 ```
 Buffer Objects存储的是任意大小的线性内存数组，这些内存在使用前需要被分配，有两种为Buffer Objects 分配内存的方法：可变或者不可变。为buffer分配不可变内存会改变你跟Buffer Object交互的方式。
 
+<!--more-->
+
 ## Immutable Storage
 Buffer Objects被分配为不可变方式时，你不能为这个Buffer重新分配内存。使用explicit invalidation
 command 或者mapping the buffer.

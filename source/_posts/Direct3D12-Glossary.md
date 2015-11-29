@@ -16,6 +16,8 @@ These terms are distinctive of Direct3D 12.
 # bundle 
   A command buffer that the graphics processing unit (GPU) can execute only directly via a direct command list. A bundle inherits all GPU state (except for the currently set pipeline state object and primitive topology).
 
+<!--more-->
+
 ---
 # command allocator 
   The underlying memory allocations in which GPU commands are stored. The command allocator object applies to both direct command lists and bundles.

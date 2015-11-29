@@ -7,6 +7,8 @@ tags: DirectX
 # DirectX Pipeline
 ---
 
+<!--more-->
+
 ## DirectX9
 ![D3D9](http://7xlvtd.com1.z0.glb.clouddn.com/15-9-18/61135679.jpg)
 

@@ -15,6 +15,8 @@ tags:
 -  [antongerdelan](http://antongerdelan.net/opengl/index.html)
 - [mbsoftworks](http://www.mbsoftworks.sk/index.php?page=tutorials&series=1)
 
+<!--more-->
+
 OpenGL官网推荐的：
 - [Develop with OpenGL 3.1 from scratch (Français)](https://openclassrooms.com/courses/developpez-vos-applications-3d-avec-opengl-3-3)
 - [Learning Modern 3D Graphics Programming Through OpenGL](http://alfonse.bitbucket.org/oldtut/index.html)

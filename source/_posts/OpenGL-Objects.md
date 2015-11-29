@@ -10,6 +10,9 @@ tags: OpenGL
 　　 需要注意的是，OpenGL只是制定相应的规范，具体实现是由各个显卡驱动的厂商决定的，但实现也一般都会符合OpenGL制定的规范。
 
 ---
+
+<!--more-->
+
 # Creation & Destruction
 
 ``` 

@@ -6,8 +6,8 @@ menu:
 
 # SubNav
 subnav:
-  github: "#"
-  weibo: "#"
+  github: "https://github.com/byhj"
+  weibo: "http://weibo.com/byhj"
   rss: "#"
   zhihu: "#"
   #douban: "#"
@@ -35,7 +35,7 @@ google_analytics: ''
 favicon: /favicon.png
 
 #你的头像url
-avatar: 
+avatar: /assets/img/byhj.png
 #是否开启分享
 share: true
 #是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
@@ -43,21 +43,17 @@ share: true
 duoshuo: true
 #是否开启云标签
 tagcloud: true
-
+  
 #是否开启友情链接
 #不开启——
 #friends: false
 #开启——
 friends:
   奥巴马的博客: http://localhost:4000/
-  卡卡的美丽传说: http://localhost:4000/
-  本泽马的博客: http://localhost:4000/
-  吉格斯的博客: http://localhost:4000/
-  习大大大不同: http://localhost:4000/
-  托蒂的博客: http://localhost:4000/
+
 
 #是否开启“关于我”。
 #不开启——
 #aboutme: false
 #开启——
-aboutme: 我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+aboutme: 爱书爱自然的一只鱼~~
