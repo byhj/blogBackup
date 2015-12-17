@@ -8,8 +8,8 @@ menu:
 subnav:
   github: "https://github.com/byhj"
   weibo: "http://weibo.com/byhj"
-  rss: "#"
-  zhihu: "#"
+  zhihu: "https://www.zhihu.com/people/byhj"
+  #rss: "#"
   #douban: "#"
   #mail: "#"
   #facebook: "#"
@@ -49,7 +49,6 @@ tagcloud: true
 #friends: false
 #开启——
 friends:
-  奥巴马的博客: http://localhost:4000/
 
 
 #是否开启“关于我”。
