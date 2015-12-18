@@ -21,6 +21,7 @@ tags:
 - [SlimDX DirectX 11 Tutorials](http://richardssoftware.net/Home/DirectX11Tutorials)
 
 <!--more-->
+
 - [DirectX Graphics and Gaming](https://msdn.microsoft.com/en-us/library/windows/desktop/ee663274(v=vs.85)) Microsoft的DirectX说明文档,旧版本DiectX11.0和之前版本的文档是随着DirectX SDK安装到本地的。
 - [DirectX Developer Blog](http://blogs.msdn.com/b/directx/)DirectX官方博客
 
@@ -38,7 +39,9 @@ DirectX9主要看了龙书，没怎么了解其它网站的教程,分享一下�
 - [Where is the DirectX SDK (2013 Edition)?](http://blogs.msdn.com/b/chuckw/archive/2013/07/01/where-is-the-directx-sdk-2013-edition.aspx)
 - [DirectXMath Programming Guide](https://msdn.microsoft.com/en-us/library/windows/desktop/ee415571(v=vs.85) )
 - 【】 https://msdn.microsoft.com/library/windows/apps/hh452744
+
 ---
+
 # Book
 
 - Introduction to 3D Game Programming with DirectX 9.0
@@ -48,11 +51,15 @@ DirectX9主要看了龙书，没怎么了解其它网站的教程,分享一下�
 
 
 ---
+
 # Tool
+
 - [DirectX Tools for Windows 10 in Visual Studio 2015](https://channel9.msdn.com/Series/ConnectOn-Demand/212)
 - [DirectX SDK Tools Catalog](http://blogs.msdn.com/b/chuckw/archive/2014/10/28/directx-sdk-tools-catalog.aspx)
 - [Visual Studio Graphics Diagnostics](https://msdn.microsoft.com/en-us/library/hh315751.aspx)
+
 ---
+
 # Code
 
 ---
