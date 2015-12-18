@@ -1,7 +1,8 @@
-title: DirectX-Pipeline
+title: Direct3D-Pipeline
 date: 2015-09-18 12:23:24
-tags: DirectX
-
+tags:
+     - DirectX
+     - D3D
 ---
 
 # DirectX Pipeline

@@ -20,13 +20,21 @@
       </div>
       <% } %>
     <% } %>
+    
     <div class="article-entry" itemprop="articleBody">
-      <% if (post.excerpt && index){ %>
-        <%- post.excerpt %>
-      <% } else { %>
-        <%- post.content %>
-      <% } %>
+  <% if (post.excerpt && index){ %>
+    <%- post.excerpt %>
+  <% } else { %>
+    <% if (!index){ %>
+    <div id="toc" class="article-toc">
+      <%- toc(post.content) %>
+      <hr/>
     </div>
+    <% } %>
+    <%- post.content %>
+  <% } %>
+</div>
+
     <% if (index){ %>
     <div class="article-info article-info-index">
       <%if(post.top){%>
