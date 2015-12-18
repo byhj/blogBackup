@@ -1,6 +1,6 @@
 title: OpenGL-Tutorials
 date: 2015-09-21 10:57:56
-tags:
+tags: OpenGL
 
 ---
 
@@ -39,7 +39,7 @@ OpenGL官网推荐的：
 OpenGL最经典三本书
 - 红皮书: OpenGL Programming Guide
 - 蓝皮书: OpenGL SuperBible
-- 橙皮书: OpenGL Shading Language 
+- 橙皮书: OpenGL Shading Language
 
 还有一本值得推荐的
 - OpenGL Insights
@@ -49,9 +49,10 @@ OpenGL最经典三本书
 ---
 # Tool
 GLUT(太老了，不建议使用，freeglut完全可以替代)
-Frerglut
+Freeglut
 GLFW
 SDL
+QtOpenGL
 
 ---
 # Code
@@ -59,5 +60,3 @@ SDL
 G-Truc的Code Sample,例子简单但很全。
 
 ---
-
-
