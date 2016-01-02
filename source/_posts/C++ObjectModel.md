@@ -1,4 +1,4 @@
-title: Effective C++总结
+ title: 深度探索C++对象模型总结
 date: 2015-12-17 21:11:28
 tags: C++
 
@@ -40,3 +40,12 @@ C++以下列方式支持多态：
 - 其nonstatic data members的总和大小
 - 任何alignment的需要而填补的空间
 - 为了支持virtual 而由内部产生的任何额外负担
+
+# 构造函数语意学
+
+## Default Constructor的构造操作
+default constructors在需要的时候被编译器产生出来，但需要注意的是这种需要时编译器方面的而不是程序的需要。
+一个由于为声明constructor函数而被隐式声明的default constructor将是一个trivial constructor，在某些情况
+编译器将会生成nontrivial default constructor.
+
+- 带有Defulat Constructor 的Member Class Object
