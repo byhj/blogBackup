@@ -120,3 +120,7 @@ THE BRITISH writers'lives - John Keats
 城堡     (奥)卡夫卡著
 彼岸花   安妮宝贝
 告别薇安  安妮宝贝
+
+万物静默如谜
+我曾这样寂寞生活
+远行
