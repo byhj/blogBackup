@@ -25,12 +25,12 @@ C++部分继承了C的语法，这个部分没有模板，重载，继承，异�
 
 ```
 　static_cast<type>(expression)
-=======
----
+```
 
 ## 尽量以const, enum, inlne替代 #define
 　　宁可以编译器替换预处理器，因为#define不被视为语言的一部分，使用#define定义的名称没有进入符号表中，所以在追踪这类信息时会带来困扰。
 预处理器盲目替换宏名称会带来更多的目标码，我们无法使用#define创建一个class专属常量，也不能提供任何封装性,下面的const提供了这些支持。
+
 ```
 class GamePlayer {
   private:
@@ -50,6 +50,7 @@ private:
 获得一个pointer或reference指向你的某个整数常量，enum hack是template metaprogramming的基础技术。
 
 　　另一个#define误用的地方是定义像函数一样的宏，需要记住宏中所以实参都要加上小括号，这样的形式的宏很容易出现错误。我们可以使用template inline函数去替代它：
+
 ```
 template<typename T>
 inline void max(const T &a, const T &b)
@@ -75,7 +76,8 @@ STL迭代器以指针为根据塑模处理，所以也可以用const作用于它
 
   我们可以利用mutable关键字释放not-static成员变量的bitwise constness约束。
   - 在const和non-const成员函数中避免重复
-  ```
+
+```
   class TextBlock {
     public:
      const char & operator[](std::size_t pos) const
@@ -91,6 +93,7 @@ STL迭代器以指针为根据塑模处理，所以也可以用const作用于它
 ```
 
 为了避免重复，我们令non-const版本调用const版本
+
 ```
 class TextBlock
 {
@@ -105,7 +108,6 @@ class TextBlock
      return const_cast<char&>( static_cast<const TextBlock &)(*this)[pos] );
    }
 };
-
 ```
 　　需要注意的是，const成员函数承诺不改变对象的逻辑状态，所以使用const版本调用non-const版本是错误的，
 这样做对象有可能因此被改动，使用了const_cast将（this*)身上的const性质解放掉。
@@ -268,6 +270,48 @@ public:
 }
 
 ```
+## 赋值对象时勿忘其每一个成分
+copy构造函数和copy assignment操作符。如果你为class添加一个成员变量，你必须同时修改copying函数。
+当你编写一个copying函数时，请确保：
+- 复制所有local成员变量
+- 调用所有base calsses内的适当的copying函数
+记住不要尝试以某个copying函数实现另一个copying函数，应该讲共同机能放进第三个汉中，并由两个copying函数共同调用。
+---
+
+# 资源管理
+当你使用了，将来必须还给系统。
+
+## 以对象管理资源
+获得资源后立刻放进管理对象中,资源获取的时机便是初始化时机(RAII)。
+管理对象运用析构函数确保资源被释放。
+使用引用计数型智慧指针（RCSP）shared_ptr进行资源管理
+
+## 在资源管理类中小心copying行为
+资源在构造期间获得，在析构期间释放。
+复制RAII对象必须一并复制它所管理的资源，所以资源的copying行为决定RAII对象的copying行为。
+普遍而常见的RAII class copying行为是：抑制copying,施行引用计数法，不过其他行为也都可能被实现。
+
+## 在资源管理类中提供对原始资源的访问
+APIs往往要求访问原始资源，所以每一个RAII class应该提供一个取得其所管理之资源的方法。
+对原始资源的访问可能经由显示转换或隐式转换，一般而言显示转换比较安全，但隐式转换对客户比较方便。
+
+## 成对使用new和delete时要采取相同形式
+如果你在new表达式使用[]，必须在相应的delete表达式中也使用[]，如果在new中不使用，那么在delete也不应该使用。
+
+## 以独立语句将newed对象置入智能指针
+以独立语句将newed对象存储于智能指针，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露。
+
+
+---
+# 设计与声明
+
+---
+# 实现
+
+---
+
+# 模板与泛型编程
+
 ---
 
 # 杂项讨论
