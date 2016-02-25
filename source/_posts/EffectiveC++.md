@@ -226,7 +226,7 @@ public:
 
 ## 若不想使用编译器自动生成的函数，就该明确拒绝
 　　在旧C++中，将copy构造函数或者copy assignment操作符声明为private可以阻止人们调用它们。但是member函数和friend函数还是有可能去调用
-它们，我们可以将连接器的错误移至编译期，以尽早发现这类错误。具体做法如下：
+它们，这个时候会产生未定义的连接错误。我们可以将连接器的错误移至编译期，以尽早发现这类错误。具体做法如下：
 ```
 class Uncopyable {
 protected:
@@ -242,13 +242,18 @@ class Test : private Uncopyable {
 
 };
 ```
-当有尝试拷贝Test对象的操作发生，编译器会拒绝这些操作。在C++11中可以使用 = delete函数修饰符声明成员函数为删除的，使得编译器不自动生成。
+当有(member函数或friend函数)尝试拷贝Test对象的操作发生，需要产生一个copy构造函数和copy assignment函数，这些copy函数会
+调用基类对应的copy函数，而基类并没有定义这样的copy函数，所以编译器会拒绝这些操作。
+在C++11中可以使用 = delete函数修饰符声明成员函数为删除的，使得编译器不自动生成。
 
 ## 为多态基类声明virtual析构函数
 　　当derived class对象经由一个base class指针被删除，而该base class带有一个non-virtual析构函数时，其结果未有定义，因为实际执行时对象
-的derived成分没有被销毁，造成资源泄露。任何class只要带有virutal函数都几乎确定应该有一个virtual析构函数，如果不含virtual函数，通常表示
+的derived成分没有被销毁，这造成了资源泄露。任何class只要带有virutal函数都几乎确定应该有一个virtual析构函数，如果不含virtual函数，通常表示
 它并不意图被作为一个base class。
-　　classes的设计目的如果不是作为base classes使用，或不是为了具备多态性就不该声明virtual析构函数。
+　　classes的设计目的如果不是作为base classes使用，或不是为了具备多态性就不该声明virtual析构函数。即使class完全不带virtual函数，还是可能出现
+virtual析构函数问题，，当你试图去继承于STL中string,vector,list等不带virtual析构函数的class时就会出现这样的问题。
+　　abstract classes不能创建对应的对象，当你希望拥有abstract classes而又没有合适的pure virtual函数时，可以将virtual函数声明为pure。这里有个要
+注意的地方是：你需要为pure virtual析构函数提供一个定义，因为其派生类的析构会自动调用基类的析构函数，所以需要有一个定义。
 ```
 class AWOV {
 public:
@@ -257,13 +262,66 @@ public:
 //需要提供一份定义
 AWOV::~AWOV(） {}
 ```
+## 别让异常逃离析构函数
+　　C++并不禁止析构函数抛出异常，当这样做往往会造成资源的泄露或者多次抛出异常导致不明确的行为。
+为了避免这个问题，往往采取以下方法：
+1.如果调用抛出异常时就结束程序
+```
+Test::~Test()
+{
+    try { db.close();  }
+    catch(...) {
+      //调用失败时记录
+      std::abort()
+    }
+}
+```
+2.吞下因调用函数而发生的异常
+```
+Test::~Test()
+{
+    try { db.close();  }
+    catch(...) {
+      //调用失败时记录
+    }
+}
+```
+这两种方法都无法对“导致函数调用抛出异常”的情况做出反应。我们可以重新设计接口，使得客户有
+机会对可能出现的问题作出反应，通过提供一个普通函数而非在析构函数中执行来对抛出的异常进行处理。
+```
 
+void Test::close()
+{
+  db.close();
+  closed = true;
+}
+
+Test::~Test()
+{
+    if (!closed) {
+    try {
+      db.close();
+    } catch(...) {
+      //调用失败时记录
+    }
+  }
+}
+```
+
+## 绝不在构造和析构过程中调用virtual函数
+　　在base构造期间，virtual函数不是virtual函数，base class构造期间virtual函数不会下降到derived classed阶层，因为此时
+的派生类部分还为进行构造。这个时候的对象类型是base class而不是derived class。除此之外，使用运行期类型信息(typeid或dynamic_cast)
+也是同样的结果。
+　　同样道理，一旦derived class析构函数开始执行，对象内的derived class成员变量就呈现未定义值，进行base class析构函数后对象就
+成为一个base class对象，这个时候virtual函数并不起到想要的作用。
+　　确定你的析构函数和构造函数都没有（在对象被创建和被销毁期间）调用virtual 函数，而它们调用的所有函数也都服从同一约束。
+　
 ## 令operator = 返回一个reference to this
-　　为了能够连续赋值，赋值操作符应该返回一个reference指向操作符的走侧参数，这是个协议并没有强制性。
+　　为了能够对对象进行连续赋值，赋值操作符应该返回一个reference指向操作符的左侧参数，这只是个协议并没有强制性。
 ```
 class Test {
 public:
-   Test operator = （const Test &rhs)
+   Test& operator = （const Test &rhs)   //同样适用于+=，-=， *=等等赋值相关运算
    {
      return *this;
    }
@@ -271,11 +329,16 @@ public:
 
 ```
 ## 赋值对象时勿忘其每一个成分
-copy构造函数和copy assignment操作符。如果你为class添加一个成员变量，你必须同时修改copying函数。
-当你编写一个copying函数时，请确保：
+　　当你自己定义class的copy构造函数和copy assignment操作符时，编译器不会生成将所有成员进行拷贝的默认copy操作函数。
+所以如果你为class添加一个新成员变量，你必须同时修改对应的copy函数。除此之外，当你继承于这样的base class时，要注意在
+派生类中的copy函数调用基类copy函数对基类成员变量进行copy操作，如果没有调用的话编译器对基类的copy可能是采取default构造函数对
+成员变量进行缺省的初始化动作。
+
+当你编写一个copy函数时，请确保：
 - 复制所有local成员变量
 - 调用所有base calsses内的适当的copying函数
-记住不要尝试以某个copying函数实现另一个copying函数，应该讲共同机能放进第三个汉中，并由两个copying函数共同调用。
+记住不要尝试以copy构造函数去调用copy assignment，反之亦然。如果要避免代码重复的话，应该讲共同机能放进新的成员函数中，
+这个函数通常为private且命名为init，然后两个copy函数共同调用这个init函数。
 ---
 
 # 资源管理
