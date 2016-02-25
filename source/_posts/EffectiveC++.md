@@ -8,13 +8,13 @@ tags: C++
 
 ## 视C++为一个语言联邦　当今的C++是个多重范型编程语言(过程形式，面向对象形式，函数形式，泛型形式，元编程形式)，我们应该将C++视为由语言组成的联邦而非单一语言,C++主要分为以下四个次语言：
 
-- C:                   
+- C:
 C++部分继承了C的语法，这个部分没有模板，重载，继承，异常等语法。
 - Object-Oriented C++:
 包含classes(构造析构)， 封装，继承，多态。
-- Template C++:        
+- Template C++:
 泛型编程的基础，带来了所谓的Template metaprogramming(TMP)编程。
-- STL:                
+- STL:
  STL是templater程序库，主要包括容器，迭代器，算法部分。
 
 不同的次语言有着不同的规则，在编写程序时要按照你的情况进行策略的转变。
@@ -342,27 +342,60 @@ public:
 ---
 
 # 资源管理
-当你使用了，将来必须还给系统。
+当你使用了动态分配的资源，将来必须还给系统。
 
 ## 以对象管理资源
-获得资源后立刻放进管理对象中,资源获取的时机便是初始化时机(RAII)。
-管理对象运用析构函数确保资源被释放。
-使用引用计数型智慧指针（RCSP）shared_ptr进行资源管理
+```
+void test() {
+  Test *pInv = createTest();
+  ...   //在这里return或者抛出异常时会造成资源泄露
+  delete pInv;
+}
+```
+针对上面的资源释放的问题，我们可以使用对象自动运行析构函数机制来确保资源释放。
+以对象管理资源主要有一下两个关键思想：
+1.获得资源后立刻放进管理对象中,资源获取的时机便是初始化时机(RAII)。
+2.管理对象运用析构函数确保资源被释放。
+
+auto_ptr的工作原理基本与上述思想一致，auto_ptr管理的资源不允许其他auto_ptr再次指向。
+因此我们可以使用引用计数型智慧指针（RCSP）shared_ptr进行资源管理，shared_ptr保存有对象指向
+资源，当引用计数为0时自动删除该资源，需要注意的一点是RCSPs无法打破环状引用。
 
 ## 在资源管理类中小心copying行为
 资源在构造期间获得，在析构期间释放。
-复制RAII对象必须一并复制它所管理的资源，所以资源的copying行为决定RAII对象的copying行为。
+当一个RAII对象被复制时:
+1.禁止复制，将copying函数声明为private实现。
+2.对底层资源祭出“引用计数法”, shared_ptr允许指定”删除器”来扩展使用方法。
+3.复制底部资源（deep copying)，复制RAII对象必须一并复制它所管理的资源，所以资源的copying行为决定RAII对象的copying行为。
+4.转移底部资源的所有权（auto_ptr).
 普遍而常见的RAII class copying行为是：抑制copying,施行引用计数法，不过其他行为也都可能被实现。
 
 ## 在资源管理类中提供对原始资源的访问
 APIs往往要求访问原始资源，所以每一个RAII class应该提供一个取得其所管理之资源的方法。
+在shared_ptr中get()就提供了返回指针内部原始指针的访问，在这里是进行了显示的转换。
 对原始资源的访问可能经由显示转换或隐式转换，一般而言显示转换比较安全，但隐式转换对客户比较方便。
+
 
 ## 成对使用new和delete时要采取相同形式
 如果你在new表达式使用[]，必须在相应的delete表达式中也使用[]，如果在new中不使用，那么在delete也不应该使用。
+delete需要你告诉它被删除的内存有多少对象，当使用typedef对数组形式进行简化时需要注意delete的行为。
+```
+typedef string Address[4];
+string *pstr = new Address;
+delete [] pstr; //使用delete pstr是错误的
+```
 
 ## 以独立语句将newed对象置入智能指针
 以独立语句将newed对象存储于智能指针，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露。
+```
+processWidget(shared_ptr<Widget>(new Widget), priority());
+//这里编译器对应参数的操作执行顺序没有严格的规定，当new Widget -> priority() -> shared_ptr构造
+//priority抛出异常时资源泄露
+//所以应该分离语句
+shared_ptr<Widget> pw(new Widget);
+processWidget(pw, priority);
+
+```
 
 
 ---
