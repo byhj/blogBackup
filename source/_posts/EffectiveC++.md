@@ -399,17 +399,42 @@ processWidget(pw, priority);
 
 ---
 # 设计与声明
+
 ## 让接口容易被正确使用，不易被误用
+　　如果客户企图使用某个接口而却没有获得他所预期的行为，这个代码就不应该通过编译，设计良好的接口必须考虑客户可能做出什么样的错误。
+许多客户端的错误可以通过导入新类型而得到解决。让types容易被正确使用，不容易被误用，尽量使得你的types行为与内置types一致。
+阻止误用的办法包括建立新类型，限制类型上的操作，束缚对象值，消除客户的资源管理责任。
+shared_ptr支持定制型删除器，可用来防范DLL问题：对象在动态链接程序库被new创建，却在另一个DLL内被delete。
 
 ## 设计class犹如设计type
+当你定义一个新class，也就定义了一个新type，好的types有自然的语法，直观的语义，以及一或多个高效实现品。
+- 新type的对象应该如何被创建和销毁
+- 对象的初始化和对象的赋值该有什么样的区别
+- 什么是新type的合法值
+- 你的新type需要配合某个继承图系
+- 你的新type需要什么样的转换
+- 什么样的操作符合函数对此新type而言是合理的
+- 什么样的标准函数应该驳回
+- 什么是新type的未声明接口
+- 你的新type有多么一般化
 
 ## 宁可pass-by-reference-to-const替换pass-by-value
+　　pass-by-value需要创建副本，带来的事对象的构造成本，在函数传递时实参会调用对象的copy构造函数进行复制。而采用pass-by-reference-to-const
+则可以避免构造函数或析构函数的调用，除此之外by reference方式传递参数也可以避免对象切割问题（当derived class对象以by value方式传递到一个base
+class对象上，derived 部分会被抛弃）。
+　　以上规则并不适用于内置类型，STL的迭代器和函数对象，对他们来说，pass-by-value往往比较适合。
 
 ## 必须返回对象时，别妄想返回其reference
+　　绝不要返回pointer或reference指向某个local stack对象，因为函数调用结束后local对象会被销毁。
+也不要返回reference指向一个heap-allocated对象，或返回pointer或reference指向一个local static对象而有
+可能同时需要多个这样的对象。
 
 ## 将成员变量声明为private
+将成员变量声明为private，可赋予客户范文数据的一致性，可细微划分访问控制，许诺约束条件获得保证，并提高class作者以充分的实现弹性。
+protected并比public更具封装性，封装性与其内容改变时可能造成的代码破坏量成反比。
 
 ## 宁以non-member,non-friend替换member函数
+宁以non-member,non-friend替换member函数，这样可以增加封装性，包裹弹性和机能扩充性。
 
 ## 若所有参数皆需类型转换，请为此采用non-member函数
 
@@ -419,17 +444,34 @@ processWidget(pw, priority);
 # 实现
 
 ## 尽可能延后变量定义式的出现时间
+因为异常的抛出和程序错误可能会使早些定义好的变量没有析构，造成资源泄露。
 
 ## 尽量少做转型动作
+const_cast<T>();     //常量性移除
+dynamic_cast<T>();   //安全向下转型
+reinterpret_cast<T>(); //低级转型
+static_cast<T>();    //隐式转型
 
 ## 避免返回handles指向对象内部成分
+避免dangling handles
 
 ## 为“异常安全”而努力是值得的
+不泄露任何资源
+不允许数据败坏
 
 ## 彻底了解inlining的里里外外
+　　对函数调用使用函数本体进行替换，增加目标码，导致额外的换页行为，降低指令高速缓存装置的击中率。
+inline只是对编译器的申请，而不是强制命令，一般放在头文件中。编译器会拒绝过于复杂（带有循环或递归）
+的函数inline，一个函数是否真正inline，取决于你的建置环境，主要取决于编译器。
+编译器不对通过函数指针而进行的调用实施inlining,当程序需要取某个inline函数的地址时也不会inline.
+
 
 ## 将文件间的编译依存关系降至最低
+　　使用object references或object pointer完成任务，不用objects.
+尽量以class声明式替换class定义式。
 
+1.pimpl idiom
+2.interface class
 ---
 # 继承与面向对象设计
 
