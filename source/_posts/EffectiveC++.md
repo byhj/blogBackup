@@ -6,8 +6,9 @@ tags: C++
 
 # 让自己习惯C++
 
-## 视C++为一个语言联邦　当今的C++是个多重范型编程语言(过程形式，面向对象形式，函数形式，泛型形式，元编程形式)，我们应该将C++视为由语言组成的联邦而非单一语言,C++主要分为以下四个次语言：
-
+## 视C++为一个语言联邦　
+当今的C++是个多重范型编程语言(过程形式，面向对象形式，函数形式，泛型形式，元编程形式)，
+我们应该将C++视为由语言组成的联邦而非单一语言,C++主要分为以下四个次语言：
 - C:
 C++部分继承了C的语法，这个部分没有模板，重载，继承，异常等语法。
 - Object-Oriented C++:
@@ -115,7 +116,7 @@ class TextBlock
 ---
 ## 确定对象被使用前已先被初始化
 　　读取未初始化的值会导致不明确的行为，在使用对象前先初始化。对于内置类型之外的东西，其初始化责任落在构造函数上。
-需要注意的是赋值和初始化的区别
+需要注意的是赋值和初始化的区别.
 ```
 class Test
 {
@@ -132,8 +133,8 @@ private:
    int m_b;
 };
 ```
-　　在这个例子是先调用了default构造函数，然后再构造函数内对成员进行了赋值操作。对象的成员变量的初始化动作发生在进入构造函数本体之前。
-比较好的方式时使用成员初始化列表
+　　在这个例子是先调用了default构造函数，然后再构造函数内对成员进行了赋值操作。
+对象的成员变量的初始化动作发生在进入构造函数本体之前。比较好的方式时使用成员初始化列表。
 ```
 class Test
 {
@@ -476,22 +477,42 @@ inline只是对编译器的申请，而不是强制命令，一般放在头文�
 # 继承与面向对象设计
 
 ## 确定你的public继承塑模出is-a关系
+　　能够施加于base class对象身上的每件事情，都可以施加于derived class对象上；每一个derived class也都是一个base class.
+企鹅与鸟，矩形和正方形都是错误的public继承。
 
 ## 避免遮掩继承而来的名称
+　　derived class作用域被嵌套在base class作用域内，所以derived classes内的名称会遮掩base classes内的名称。我们可以通过
+使用using声明式或转交函数（在devied class function中调用base版本进行实现）避免。
 
 ## 区分接口继承和实现继承
+- 声明一个pure virtual函数的目的是为了让dericed classed只继承函数接口。
+- 声明impure virtual函数的目的是为了让derived classes继承该函数的接口和缺省实现。
+- 声明non-virtual函数的目的是为了令derived classes继承函数的接口以及一份强制性实现。
+
 
 ## 考虑virtual函数以外的其他选择
+- 借由Non-Virtual Interface手法实现Template Method模式
+- 借由Function Pointers实现Strategy模式
+- 借由tr1::function完成Strategy模式
+- 古典Strategy模式
 
 ## 绝不重新定义继承而来的non-virtual函数
+　　重新定义继承而来的non-virtual破坏了继承的is-a关系，不变性凌驾特异性。
 
 ## 绝不重新定义继承而来的缺省参数值
+　　缺省参数值是静态绑定，当你在调用一个定义于derived class内的virtual函数同时却使用base class为它所指定的
+缺省参数值。
 
-## 通过复合塑模出has-a或“根据某物实现出”
+## 通过复合塑模出has-a或“根据某物实现出”　　
+　　在应用域复合意味着has-a(有一个)，程序中的对象其实相当于你塑造的世界中的某些事物（人，汽车）。
+在实现域复合意味着is-implemented-in-terms-of(根据某物实现出)，实现细节上的人工制品（缓冲去，互斥器，查找树）
 
 ## 明智而审慎地使用private继承
+　　private继承意味is-implemented-in-terms-of, 他通常比复合级别低。private继承可以造成空白基类最优化EBO。
 
 ## 明智而审慎地使用多重继承
+　　多重继承比单一继承复杂，可能导致新的歧义性以及对virtual继承的需要。而virtual继承会增加大小，速度，初始化和赋值复杂度的成本。
+多重继承适用于涉及“public 继承某个interface class”和”private"继承某个协助实现的class"的两相组合。
 
 ---
 # 模板与泛型编程
