@@ -14,11 +14,14 @@ C++对象模型主要解释为：
 - virtual base blass : 用以实现“多次出现在继承体系中的base class, 有一个单一而被共享的实例”。
 - 多重继承下的一些额外负担。
 
+<!--more-->
+
 ## C++对象模型
 - 简单对象模型：members本身不放在objects中，object存储指向member的指针。
 - 表格驱动对象模型：数据与操作分离为两个表格，object存储指向两个表格的指针。
 - C++对象模型：每一个class产生一堆指向virtual functions的指针，放在virtual table(vtbl)中，每一个class
                object安插一个vptr指向相关的virtual table，每一个class关联的type_info objects信息。
+               vptr的设定和重置都由每一个class的constructor, destructor, copy assignment自动完成。
 
 ## 关键词所带来的差异
 当一个人感觉到比较好的时候，使用struct取代class，注意struct在C++中的逻辑意义和如何正确使用。
@@ -41,11 +44,86 @@ C++以下列方式支持多态：
 - 任何alignment的需要而填补的空间
 - 为了支持virtual 而由内部产生的任何额外负担
 
+---
+
 # 构造函数语意学
 
 ## Default Constructor的构造操作
 default constructors在需要的时候被编译器产生出来，但需要注意的是这种需要时编译器方面的而不是程序的需要。
-一个由于为声明constructor函数而被隐式声明的default constructor将是一个trivial constructor，在某些情况
+一个由于为声明constructor函数而被隐式声明的default constructor将是一个trivial（无用） constructor，在某些情况
 编译器将会生成nontrivial default constructor.
 
-- 带有Defulat Constructor 的Member Class Object
+- 带有Defulat Constructor 的Member Class Object：
+  　　在constructor真正被调用生成，编译器在包含这样member的constructor中自动扩张，将member的constructor行为先进行
+  运行，其调用顺序根据member objects在class中的声明顺序决定。
+
+- 带有Default Constructor 的Base Class
+ 　与上面同理，bass class的constructor先进行调用。
+
+- 带有一个Virtual Function的Class
+　　class声明或者继承一个virtual Function  /  class派生自一个继承链，其中有一个或多个virtual base classes.
+一个virtual function table 会被编译器生成，内放virtual function地址。vptr内含vtbl的地址。
+
+- 带有Virtual Base Class 的 Class
+
+## Copy Constructor的构造操作
+有三种情况使得一个object的内容作为另一个class object的初值：
+- 对一个object做显示的初始化操作
+- 当object被当做参数交给某个函数时
+- 当函数传回一个class object时
+
+Default Memberwise Initialization:为定义一个explicit copy constructor时，将object使用递归方式拷贝每个成员。
+
+当class不展现Bitwise Copy Semantics时会合成copy constructor:
+- 当class内含一个声明有copy constructorh的member object
+- 继承的base class有一个copy constructor(不论是显示声明还是合成而得)
+- 当class声明一个多多个virtual functions
+- 当class派生于继承链，其中有一个或多个virtual base classes
+
+## 程序转化语意学
+
+## 成员们的初始化队伍
+- 初始化一个reference member
+- 初始化一个const member
+- 调用一个base class的constructor,而他拥有一组参数
+- 调用一个member class的constructor， 而它有一组参数
+initialization list的初始化会被以适当的顺序在constructor之内安插初始化操作，并且在任何explicit user code之前。
+
+---
+
+# Data 语意学
+- 语言本身所造成的额外负担
+- 编译器对于特殊情况所提供的优化处理
+- Alignment限制
+
+## Data Member的绑定
+   一个inline函数实体，在整个class声明未被完全看见之前，是不会被评估求值得。
+
+## Data Member的布局
+　　static data merbers不会被放进class的布局中，members的顺序根据编译器而定，较晚出现的members有较高的地址。
+
+## Data Member的存取
+- Static Data Members
+　　static 成员只有一个实例，通过一个指针和对象存取member结果一样。若取一个static data member的地址会得到一个指向
+其数据类型的指针。name-mangling对其进行独一性的编码。
+
+- Nonstatic Data Members
+　　在成员函数内，data members通过隐式的this指针进行访问，不同data数据的访问是通过对class object地址进行偏移进行访问。
+Data members的地址在编译期即可获得，当使用继承之类的机制，data members的存取效率会受到影响。
+
+## 继承与Data Member
+　　具体继承并不会增加空间或者存取时间的额外负担。但加上多态机制之后情况就会有所不同，vtbl 和vptr的创建，constructor和destructor对
+vtbl和vptr的设定和销毁都会带来空间和时间上的负担。
+　　将vptr放在class object的尾端可以保留base class C struct的对象布局。将vptr放在class object的前端对于在多重继承下，通过指向class
+members的指针调用virtual function带来一些帮助。
+
+## 多重继承
+
+
+## 虚继承
+
+## 对象成员的效率
+
+## 指向Data Members的指针
+ 　　取一个nonstatic data member的地址，将会得到它在class中的offset
+---
