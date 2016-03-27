@@ -127,3 +127,38 @@ members的指针调用virtual function带来一些帮助。
 ## 指向Data Members的指针
  　　取一个nonstatic data member的地址，将会得到它在class中的offset
 ---
+
+# Function 语意学
+
+## Member的各种调用方式
+
+### Nonstatic Member functions
+- 改写函数的signature以安插一个额外参数（this)到member function以提供存取管道，使得class object得以将此函数调用。
+- 将每一个“对nonstatic data member”的存取操作改为经由this指针来存取。
+- 将member function通过mangling重新写成一个独一无二的·外部函数。
+
+### Virtual Member functions
+  通过虚运行机制进行调用。
+### Static Member functions
+- 没有this指针
+- 不能直接存取class中的nonstatic members
+- 不能够被声明为const, volatile， virtual
+- 不需要经由class object才被调用
+- 取一个这样的地址将获得其内存中的地址吗,是一个nonmember函数指针。
+
+## Virtual Member functions
+　　多态以一个public base class的指针或引用寻址出一个derived class object。每个多态class object增加两个members
+一个字符串或数据表示class的类型和一个指向某个表格的指针（vptr),为了找到函数地址，每一个virtual function被指派一个表格
+索引值。
+
+### 多重继承下得Virtual functions
+
+## 函数的效能
+
+## 指向Member Function的指针
+　　取一个nonstatic member function的地址得到的时它在内存中真正的地址，这个值不是完全的，需要被绑定到某个class object上才能
+够通过它调用该函数。
+
+## Inline Functions
+- 分析函数定义
+- 真正的inline函数扩展操作是在调用的那一点上。
