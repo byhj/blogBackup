@@ -518,7 +518,7 @@ inline只是对编译器的申请，而不是强制命令，一般放在头文�
 # 模板与泛型编程
 
 ## 了解隐式接口和编译期多态
-
+　　
 ## 了解typename的双重意义
 
 ## 学习处理模板化基类内的名称
@@ -537,6 +537,13 @@ inline只是对编译器的申请，而不是强制命令，一般放在头文�
 # 定制new和delete
 
 ## 了解new-handler的行为
+　　当operator new抛出异常以反映一个未获满足的内存需求之前，会先调用一个客户指定的错误处理函数，称为
+new-handler.一个良好的new-handler必须做到以下几点：
+- 让更多内存可被使用
+- 安装另一个new-handler
+- 卸载new-handler
+- 抛出bad_alloc
+- 不返回
 
 ## 了解new和delete的合理替换时机
 
