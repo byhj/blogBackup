@@ -509,6 +509,8 @@ inline只是对编译器的申请，而不是强制命令，一般放在头文�
 
 ## 明智而审慎地使用private继承
 　　private继承意味is-implemented-in-terms-of, 他通常比复合级别低。private继承可以造成空白基类最优化EBO。
+private继承不会讲一个derived class对象转换为一个base class对象。由private继承而来的所有成员会变成private属性。
+private继承是一种实现技术，意味只有部分被继承，接口部分应略去。
 
 ## 明智而审慎地使用多重继承
 　　多重继承比单一继承复杂，可能导致新的歧义性以及对virtual继承的需要。而virtual继承会增加大小，速度，初始化和赋值复杂度的成本。
@@ -518,38 +520,68 @@ inline只是对编译器的申请，而不是强制命令，一般放在头文�
 # 模板与泛型编程
 
 ## 了解隐式接口和编译期多态
-　　
-## 了解typename的双重意义
+　　classes和templates都支持接口和多态，对classes而言接口是显式的，以函数签名为中心，多态则是通过virtual函数发生于运行期。
+对与templeate参数而言，接口是隐式的，通过template具现化和函数重载解析发生于编译期。
 
-## 学习处理模板化基类内的名称
+## 了解typename的双重意义
+　　声明template参数时，前缀关键词class和typename可以互换。
+请使用关键词typename标识嵌套从属类型名称,但不得在base class lists或member initialization list内以它作为base class修饰符。
+
+##  学习处理模板化基类内的名称
+　　可在derived class templates内通过this->指涉base class templates内的成员名称，或借由一个明白写出的base class资格修饰符完成。
 
 ## 将与参数无关的代码抽离templates
+　　Templates生成多个classes和多个函数，所以任何template代码都不该与某个造成膨胀的template参数产生相依关系。
+因非类型模板参数而造成的代码膨胀，往往可以消除，做法是以函数参数或class成员变量替换template参数。
+因类型参数而造成的代码膨胀，往往可降低，做法是让带有完全相同二进制表述的具现类型共享实现码。
 
 ## 运用成员函数模板接受所有兼容类型
+ 　请使用member function templates生成可接受所有兼容类型的函数。
+ 如果你声明member templates用于"泛化copy构造"或“泛化assignment操作”，你还是需要声明正常的copy构造函数和copy assignment
+ 操作符。
 
 ## 需要类型转换时请为模板定义非成员函数
+　　当我们编写一个class template， 而它所提供之“与此template相关的”函数支持“所有参数之隐式类型转换”时，请将那些函数定义为
+“class template内部的friend函数”。
 
 ## 请使用traits classes表现类型信息
+　　Traits classes使得“类型相关信息”在编译期可用，它们以templates和templeates特化完成实现。
+整合重载技术后，traits classes有可能在编译期对类型执行if_else测试。
 
 ## 认识template元编程
+　　模板元编程可将工作由运行期移往编译期，因而得以实现早期错误侦测和更高的执行效率。
+TMP可被用来生成“基于政策选择组合”的客户定制代码，也可用来避免生成对某些特殊类型并不适合的代码。
 
 ---
 # 定制new和delete
 
 ## 了解new-handler的行为
 　　当operator new抛出异常以反映一个未获满足的内存需求之前，会先调用一个客户指定的错误处理函数，称为
-new-handler.一个良好的new-handler必须做到以下几点：
+new-handler.
+一个良好的new-handler必须做到以下几点：
 - 让更多内存可被使用
 - 安装另一个new-handler
 - 卸载new-handler
 - 抛出bad_alloc
 - 不返回
+Nothrow new是一个颇为局限的工具，因为它只适用于内存分配，后继的构造函数调用还是可能抛出异常。
 
 ## 了解new和delete的合理替换时机
+- 为了检测运用错误
+- 为了收集动态分配内存之使用统计信息。
+- 为了增加分配和归还的速度
+- 为了降低缺省内存管理器带来的空间额外开销
+- 为了补偿缺省分配器中的非最佳齐位
+- 为了将相关对象成簇集中
+- 为了获得非传统的行为
 
 ## 编写new和delete时需固守常规
+　　operator new应该内含一个无穷循环，并在其中尝试分配内存，如果它无法满足内存需求，就该调用new-handler。它也
+应该有能力处理0bytes申请，Class 专属版本则还应该处理“比正确大小更大的错误申请”。
+　　operator delete应该在收到null指针时不做任何事。Class专属版本则还应该处理“比正确大小更大的错误申请”。
 
-## 写了placement new也要写placement delete
+## 写了plac ement new也要写placement delete
+　　如果operator new接受的参数除了一定会有的那个size_t之外还有其他，这个是一个placement new.
 
 ---
 # 杂项讨论
