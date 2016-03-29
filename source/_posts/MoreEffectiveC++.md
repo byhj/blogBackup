@@ -98,3 +98,35 @@ new operator所调用的constructor数量不同。
 ---
 
 # 异常
+
+## 利用destructors避免内存泄露
+　　以一个对象存放“必须自动释放的资源”并依赖该对象的destructor释放，可以在exceptions出现时避免资源泄露。
+
+## 在constructors内阻止资源泄露
+　　exception的发生可能由于operator new无法分配足够内存时，这时控制权被移出constructor之外，而析构函数对已构造完成的对象才进行
+释放操作。这个时候，我们需要将所有可能的exceptioons捕捉起来，执行某些清理工作，然后从新抛出exception使它继续传播出去。当member initialization\
+lists时，把try catch放在private member functions内，然后进行处理。
+
+## 禁止异常流出destructors之外
+　　destructor在两种情况下会被调用：
+- 当对象在正常状态下被销毁，也就是当它离开了它的生存空间或是被明确地删除
+- 当对象在exception处理机制的statck-unwinding(展开)机制-销毁
+可以避免terminate函数在exception传播过程的stack-unwinding， 可以协助确保destructors完成其应该完成的所有的事情。
+
+
+## 了解“抛出一个exception”与”传递一个参数”或“调用一个虚函数”之间的差异
+　　函数参数和exceptions的传递方式都有三种，by value, vy reference, by pointer。但是你调用一个函数，控制权最终会回到调用端。
+而当你抛出一个exception,控制权不会再回到抛出端。不论exception是以哪种方式参数传递，都会发生复制行为，catch得到是副本，这个复制行为
+是由对象的copy constructor执行的，该复制动作永远是以对象的静态类型为本。
+　　exceptions与catch子句相匹配过程中，仅有两种转换可以发生：
+- 继承架构中的类转换
+- 从一个“有型指针”转为”无型指针”
+
+## 以by reference方式捕捉exceptions
+　　catch by reference可以避免对象删除问题。
+
+## 明智运用exception specifications
+
+## 了解异常处理的成本
+- 必须付出一些空间，放置某些数据结构（记录着那些对象已被完全构造）
+- try语句块
