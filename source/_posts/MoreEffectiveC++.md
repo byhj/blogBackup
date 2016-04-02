@@ -149,4 +149,34 @@ lists时，把try catch放在private member functions内，然后进行处理。
    如果你预期程序常常会用到某个计算，你可以降低每次计算的平均成本，办法就是设计一份数据结构以便能够极有效率地处理需求。
   Catching和prefetching(预先取出)都是其中的案例。
   但是较佳往往导致较大的内存成本。
-   
+
+## 了解临时对象的来源
+　　C++中真正的临时对象时不可见的，由编译器隐式调用生成。一般而言，函数调用时隐式转换和函数返回对象时会生成这类对象。
+你可以声明reference-to-const避免这类问题。
+
+## 协助完成返回值优化（RVO)
+　　编译器在返回对象时，可以执行返回值优化。
+'''
+const TestClass operator+(const TestClass &lhs, const TestClass &rhs) {
+  return TestClass(lhs.val + rhs.val);
+}
+'''
+
+## 利用重载技术避免隐式类型转换
+　　每个重载操作符必须获得至少一个用户定制的自变量，我们可以通过提供多种参数的重载函数避免临时对象的生成。
+
+## 考虑以操作符复合形式取代其独身形式
+　　我们一般使用复合形式来实现operator的单一版本，单一版本需要返回一个新对象，而复合版本则是直接将结果写入
+其左端自变量，不需要产生一个临时对象来放置返回值。
+
+## 考虑使用其他程序库
+　　C++的IO操作比C的慢很多，可以视情况选择合适的程序库。
+
+## 了解virtual functions, multiple inheritance, virtual base class, runtime type identification的成本
+　　vtbl和vptr需要额外的内存空间，换页动作由此受到影响。虚函数本身并不构成性能上的瓶颈，真正运行时期成本发生在inlining互动的时候。
+多重继承往往导致virtual base classes虚拟基类的需要，这可能导致对象内的隐式指针增加。RTTI让我们在运行时期获得objects和classes的
+相关信息，需要空间存储type_info信息，使用typeud去获得class的对应type_info，type_info放在vtbl中。
+
+---
+
+# 技术
