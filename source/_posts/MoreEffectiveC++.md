@@ -180,3 +180,33 @@ const TestClass operator+(const TestClass &lhs, const TestClass &rhs) {
 ---
 
 # 技术
+## 将constructor和non-member functions虚化
+　　virtual constructo是某种函数，视其获得的输入，可产生不同类型对象。virtual copy constructor返回一个指针，指向其调用者的一个
+新副本。当derived class重新定义其base class的一个虚函数时，不再需要一定得声明与原来相同的返回类型。
+　　non-member functions的虚化：写一个虚函数做实际工作，再写一个什么都不做的非虚函数，只负责调用函数。
+
+## 限制某个class所能产生的对象数量
+- 允许零个或一个对象
+阻止对象生成，只要将constructors声明为private，而利用单例模式static操作则可以生成一个对象。
+
+- 不同的对象构造状态
+
+- 允许对象生生灭灭
+
+- 一个用来计算对象个数的base class
+
+## 要求或禁止对象产生于heap之中
+- 要求对象产生于heap之中（head-based objects)
+让destrutor成为private,而constructors为public,导入一个伪destructor函数调用真正的private。
+
+- 判断某个对象是否位于heap中
+
+- 禁止对象产生于heap之中
+对象被直接实例化，对象被实例化为derived class objects内的base classes成分，对象被内嵌于其他对象之中。
+
+
+## 智能指针
+
+
+## proxy classes代理类
+　　用来代表其他对象的对象，称为proxy objects（替身对象）,而用以表现proxy objects者，我们称为proxy classes。
