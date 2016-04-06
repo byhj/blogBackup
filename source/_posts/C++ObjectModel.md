@@ -162,3 +162,45 @@ members的指针调用virtual function带来一些帮助。
 ## Inline Functions
 - 分析函数定义
 - 真正的inline函数扩展操作是在调用的那一点上。
+
+---
+
+# 构造，析构，拷贝语意学
+纯虚函数的存在：可以定义和静态调用一个pure virtual Function, pure virtual function一定需要进行定义，派生类需要进行相关调用。
+
+## "无继承"情况下得对象构造
+Plain OI Data  ：struct
+抽象数据类型    ：ADT（Class)
+带virtual function类 ：constructor需要再任何base class construtors调用之后，在任何使用者供应的代码之前进行附加vptr初始化。
+这个时候，copy constructor和copy assignment operator不再是trivial,同样需要对vptr进行操作。
+
+## 继承体系下得对象构造
+- 虚继承：解决virtual base class的共享性问题
+
+## vptr初始化语意学
+- 当一个完整的对象被构造起来时
+- 当一个subobject constructor调用了一个virtual function
+
+## 对象复制语意
+
+## 对象的效能
+
+## 析构语意学
+- 如果object内含一个vptrm那么首先重设相关的virtual table
+- destructor的函数本体现在被执行
+- class拥有member class objects,而后者有destructors，那么它们会以声明顺序的相反顺序被调用
+-
+
+---
+
+# 执行期语意学
+
+## 对象的构造和析构
+将object尽可能放置在使用它的那个程序区段附近，这样做可以节省非必要的对象产生操作和摧毁操作。
+- 全局对象: 需要静态初始化
+- 局部静态对象: 初始化一次
+- 对象数组：
+
+## new和delete运算符
+- 通过设当的new运算符函数实例，配置所需的内存
+- 将配置得来的对象设立初值
