@@ -210,3 +210,69 @@ const TestClass operator+(const TestClass &lhs, const TestClass &rhs) {
 
 ## proxy classes代理类
 　　用来代表其他对象的对象，称为proxy objects（替身对象）,而用以表现proxy objects者，我们称为proxy classes。
+
+---
+
+# 杂项讨论
+
+## 在未来时态下发展程序
+
+　　好的软件对于变化有良好的适应能力。
+- 以C++本身(而非只是注释或说明文件)来表现各种规范
+- 避免"demand-paged"式的虚函数
+- 为每一个class处理assignment和copy construction动作
+- 努力让classes的操作符和函数拥有自然的语法和直观的语义
+- 让classes容易被正确使用，不容易被误用
+- 努力写出可移植代码
+- 设计你的代码，使：“系统改变所带来的冲击”得以局部化
+- 提供完整的classes,即使某些部分目前用不到
+- 设计你的接口，使有利于共同的操作行为，阻止共同的错误
+- 尽量使你的代码一般化，除非有不良的巨大后果
+
+## 将非尾端类（non-leaf classes）设计为抽象类
+
+　　让原来的继承base类成为子类，添加一个抽象基类，这样做可达到允许同型赋值，部分赋值和异型赋值都被禁止的功能。
+我们可以将其中的virtual destrutor函数声明为纯虚函数来避免提供一个不适合的纯虚接口，这个纯虚析构函数必须被定义，
+因为derived classes在析构时会调用base classes的析构函数。
+　　抽象基类降低了“企图以多态方式对待数组”的机会，让operator=的行为更容易被了解。强迫你明白认知有用之抽象性质的
+存在。只有在原有的具体类被当做基类使用，才强迫导入一个新的抽象类。
+ 　　当你需要扩展一个程序库而又不能修改代码时，只有少数可行的选择：
+ - 将你的具体类派生自既存的具体类
+ - 试着在程序库的继承体系中找到一个更高层的抽象类
+ - 以“你所希望继承的那个程序库类”来实现自己的新类，将程序库类对象作为新类的member
+ - 写一些non-member functions以供应你希望加入class内部去的机能
+
+ ## 如何在同一个程序中结合C++和C
+
+- Name Mangling（名称重整）
+　　Name Mangling是一种程序，通过它C++编译器为程序内的每一个函数编出独一无二的名称，在C中没有重载所以不需要此操作。
+要抑制Name Mangling需要使用C++的extern “C”的命令，它是一个叙述，说明修饰的部分应该以C语言的方式调用。如果需要同时
+处理C和C++的使用，可以采用预处理器符号__cplusplus, 这个符号只针对C++才用定义.
+
+'''
+//如果在C++环境中我们使用C编译方式
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// code
+
+#ifdef __cplusplus
+}
+#endif
+
+'''
+
+- Statics的初始化
+　　stait class对象，全局对象，namespace内的对象以及文件范围内的对象，其constructor总在main以前得到执行。
+而static initialization产生对象的destructors在main调用后。为了使得main是程序起点，很多编译器在main开始出安插
+一个函数调用的特殊函数完成static initialization.
+　　尽量使用C++编写main函数，可以调用的命名mian函数进行实际的操作,这样可以保证static的构造和析构被合理调用。
+'''
+extern "C"
+int realMain(int argc, char *argv[]);
+
+int main(int argc, char *argv[]) {
+  return realMain(argc, argv);
+}
+'''
