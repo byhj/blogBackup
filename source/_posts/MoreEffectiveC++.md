@@ -180,10 +180,49 @@ const TestClass operator+(const TestClass &lhs, const TestClass &rhs) {
 ---
 
 # 技术
-## 将constructor和non-member functions虚化
-　　virtual constructo是某种函数，视其获得的输入，可产生不同类型对象。virtual copy constructor返回一个指针，指向其调用者的一个
-新副本。当derived class重新定义其base class的一个虚函数时，不再需要一定得声明与原来相同的返回类型。
-　　non-member functions的虚化：写一个虚函数做实际工作，再写一个什么都不做的非虚函数，只负责调用函数。
+## 将constructor 和 non-member functions虚化
+　　virtual constructo是某种函数，视其获得的输入，可产生不同类型对象。从磁盘或者磁带读取对象信息经常被用到。
+
+virtual copy constructor返回一个指针，指向其调用者的一个新副本，通常以clone()命名（Prototypee）。
+当derived class重新定义其base class的一个虚函数时，不再需要一定得声明与原来相同的返回类型。
+'''
+class Base {
+  virtual Base * clone() const = 0;
+};
+
+class A : public Base {
+  virtual A * clone() const {
+    return new A(*this);
+  }
+};
+
+class B : public Base {
+  virtual B * clone() const {
+    return new B(*this);
+  }
+};
+
+'''
+
+non-member functions的虚化：写一个虚函数做实际工作，再写一个什么都不做的非虚函数，只负责调用函数。
+
+'''
+class Base {
+  virtual ostream & print(ostream &s) const = 0;
+};
+
+class A : public Base {
+  virtual ostream & print(ostream &s) const;
+};
+
+class B : public Base {
+  virtual ostream & print(ostream &s) const;
+};
+inline ostream &operator << (ostream &s, const Base &b) {
+  return b.print(s);
+}
+
+'''
 
 ## 限制某个class所能产生的对象数量
 - 允许零个或一个对象
@@ -276,3 +315,13 @@ int main(int argc, char *argv[]) {
   return realMain(argc, argv);
 }
 '''
+
+- 动态分配内存
+　　C++使用new和delete， C使用malloc和free进行内存分配，char *strdup（const char *ps)这个函数的内存分配就会
+根据不同的调用采取不同的内存分配方式，所以尽量避免调用标准程序库外的函数。
+
+- 数据结构的兼容性
+　　在C和C++之间对数据结构做双向交流，应该是安全的，前提是那些结构的定义式在C和C++中都可编译。
+
+## 让自己习惯于标准C++语言
+　　
