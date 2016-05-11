@@ -6,7 +6,7 @@
 favicon: /favicon.ico
 
 # Set default keywords (Use a comma to separate)
-keywords: "Hexo, NexT"
+keywords: "byhj"
 
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
@@ -26,8 +26,8 @@ rss:
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   home: /
-  #categories: /categories
-  #about: /about
+  categories: /categories
+  about: /about
   archives: /archives
   tags: /tags
   #commonweal: /404.html
@@ -56,9 +56,9 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+#scheme: Muse
 #scheme: Mist
-#scheme: Pisces
+scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -117,8 +117,12 @@ font:
 # Social Links
 # Key is the link label showing to end users.
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
-#social:
-  #LinkLabel: Link
+social:
+  github: https://github.com/byhj
+  twitter: https://twitter.com/xiebinyu
+  website: https://xiebinyu.com
+  emial: binyuapple@163.com
+  # 等等
 
 
 # Social Links Icons
@@ -130,10 +134,9 @@ social_icons:
   enable: true
   # Icon Mappings.
   # KeyMapsToSocalItemKey: NameOfTheIconFromFontAwesome
-  GitHub: github
-  Twitter: twitter
-  Weibo: weibo
-
+  github: github
+  twitter: twitter
+  email: envelope
 
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.jpg
@@ -198,7 +201,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night
 
 
 # Automatically scroll page to section which is under <!-- more --> mark.
@@ -291,9 +294,9 @@ facebook_sdk:
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
-  enable: false
-  app_id: #<app_id>
-  app_key: #<app_key>
+  enable: true
+  app_id: PKb1YXeoxSGQQacaNCBuWV4b-gzGzoHsz
+  app_key: UeY5313r5g3YaEqgT9zWPs5G
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/

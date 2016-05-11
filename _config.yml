@@ -4,21 +4,17 @@
 
 # Site
 title: byhj zzZ~~~
-subtitle: 世上的鲜花会盛开，壮丽不朽的事物会接踵而来
-description: This is a boring description.
+subtitle: That fresh flowers will grow, And many glories of immortal stamp.
+description: 心之所依，行之所向
 author: byhj
 language: zh-Hans
 timezone:
+avatar: /images/byhj.png
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-<<<<<<< HEAD
-url: http://github.com/byhj
-root: /
-=======
 url: https://byhj.github.io/blog
 root: /blog/
->>>>>>> origin
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -53,19 +49,16 @@ default_category: uncategorized
 category_map:
 tag_map:
 
-<<<<<<< HEAD
 # Server
 ## Hexo uses Connect as a server
 ## You can customize the logger format as defined in
 ## http://www.senchalabs.org/connect/logger.html
-port: 4000
+port: 4001
 server_ip: localhost
 logger: false
 logger_format: dev
 
 
-=======
->>>>>>> origin
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
 ## You can customize the date format as defined in
@@ -89,3 +82,14 @@ deploy:
   type: git
   repository: https://github.com/byhj/blog
   branch: gh-pages
+
+#search
+search:
+  path: search.xml
+  field: post
+
+#thrid
+duoshuo_shortname: byhjblog
+baidu_analytics: ff98247ca0c64c8bae255603193ec927
+jiathis: true
+duoshuo_share: true
