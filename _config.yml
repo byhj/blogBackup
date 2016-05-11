@@ -12,8 +12,13 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+<<<<<<< HEAD
 url: http://github.com/byhj
 root: /
+=======
+url: https://byhj.github.io/blog
+root: /blog/
+>>>>>>> origin
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -48,6 +53,7 @@ default_category: uncategorized
 category_map:
 tag_map:
 
+<<<<<<< HEAD
 # Server
 ## Hexo uses Connect as a server
 ## You can customize the logger format as defined in
@@ -58,6 +64,8 @@ logger: false
 logger_format: dev
 
 
+=======
+>>>>>>> origin
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
 ## You can customize the date format as defined in
