@@ -3,7 +3,7 @@ date: 2015-12-18 12:24:55
 tags:    
      - DirectX
      - D3D
-
+categories: Direct3D
 ---
 # Web
 

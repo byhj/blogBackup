@@ -11,13 +11,15 @@ tags: OpenGL GLSL
 in int gl_VertexID;
 in int gl_InstanceID;
 ```
-<!--more-->
+
 
 ## gl_VertexID​
 因为Vertex Shader对每个Vertex执行一次，所以gl_VertexID是Vertex Shader当前处理的顶点的索引。
 
 gl_InstanceID​
 在执行Instance绘制时，gl_InstanceID是当前实例的索引值，当没有进行Instance绘制时它是默认的0值。
+
+<!--more-->
 
 # Vertex shader outputs
 

@@ -3,6 +3,9 @@ date: 2015-09-15 10:02:30
 tags:
      - DirectX
      - D3D12
+categories:
+     - Direct3D
+
 ---
 These terms are distinctive of Direct3D 12.
 

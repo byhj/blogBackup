@@ -4,10 +4,7 @@ tags: OpenGL
 
 ---
 # Introduction
- 　　在OpenGL中，OpenGL Objects是一种包含着一些状态的结构。当你把OpenGL Objects绑定到上下文环境时，Objects内含的状态就会映射到上下文环境中的状态。在这个时候，如果你通过API函数修改了上下文中的状态，对应OpenGL Ojects内的状态也会被修改。
-　　 OpenGL被定义为一种“状态机”，它所提供的多种API函数调用可以改变OpenGL的状态，也可以查询某些状态量，或者使用当前的状态去Rendering。
-　　 OpenGL有着多种类型的Ojbects, 它们存储着不同的状态，一组状态被封装在一个OpenGL Objects中，我们可以通过函数调用去改变它们。
-　　 需要注意的是，OpenGL只是制定相应的规范，具体实现是由各个显卡驱动的厂商决定的，但实现也一般都会符合OpenGL制定的规范。
+ 　　在OpenGL中，OpenGL Objects是一种包含着一些状态的结构。当你把OpenGL Objects绑定到上下文环境时，Objects内含的状态就会映射到上下文环境中的状态。在这个时候，如果你通过API函数修改了上下文中的状态，对应OpenGL Ojects内的状态也会被修改。 OpenGL被定义为一种“状态机”，它所提供的多种API函数调用可以改变OpenGL的状态，也可以查询某些状态，或者使用当前的状态去Rendering。OpenGL有着多种类型的Ojbects, 它们存储着不同的状态，一组状态被封装在一个OpenGL Objects中，我们可以通过函数调用去改变它们。需要注意的是，OpenGL只是制定相应的规范，具体实现是由各个显卡驱动的厂商决定的，但实现也一般都会符合OpenGL制定的规范。
 
 ---
 
@@ -15,17 +12,15 @@ tags: OpenGL
 
 # Creation & Destruction
 
-``` 
+```
 void glGen*(GLsizei n, GLuint *objects)
 ```
- 　　该函数创建n个对象名称(整数值引用)，返回指向这些objects的指针。在这一步，并不需要创建objects的状态数据。对于大多数object来说，在第一次绑定到上下文时，只包含其默认状态。在绑定前使用Objects是非法的。需要注意的是，Program Pipeline Ojbects和 Sampler Objects并不遵循这种运行机制。
- 　　Object名称类型是GLuint, 它是一个数值型引用，用来识别一个object, 其中数值0在不同的Object中有着特定意义。
-  （在OpenGL3.0之前，可以完全忽略上述的的分配函数,直接绑定认为合法的Ojbect名称）
-``` 
+ 　　该函数创建n个对象名称(整数值引用)，返回指向这些objects的指针。在这一步，并不需要创建objects的状态数据。对于大多数object来说，在第一次绑定到上下文时，只包含其默认状态。在绑定前使用Objects是非法的。需要注意的是，Program Pipeline Ojbects和 Sampler Objects并不遵循这种运行机制。Object名称类型是GLuint, 它是一个数值型引用，用来识别一个object, 其中数值0在不同的Object中有着特定意义。（在OpenGL3.0之前，可以完全忽略上述的的分配函数,直接绑定认为合法的Ojbect名称）
+```
 void glDelete*(GLsizei n​, const GLuint *objects​);
 ```
  　　当我们使用完Objects，可以使用上面函数进行删除。任何非法Object和Object 0会被忽略。Objects被删除后，它们的名字可以通过glGen*重新分配。
- 
+
 ## Deletion unbinding
 　　当绑定到当前context的object被删除时，会解除所有该object的绑定。
 （Binding goes to the context; attachment is what you do when one object references another. Attachments are not severed due to this call.）
@@ -81,34 +76,34 @@ void glBind*(GLenum target​, GLuint object​);
 ---
 # Names
 　　正如上面所说，OpenGL Ojbects的名字是一个由系统分配的整数值，这种方式对于用户并不直观，在调试时也有很大的缺陷。在OpenGL 4.3 Core引入了一种为Object作标志的方法。
-``` 
-void glObjectLabel​(GLenum identifier​, GLuint name​, 
+```
+void glObjectLabel​(GLenum identifier​, GLuint name​,
                    GLsizei length​, const char * label​);
-                   
+
 void glObjectPtrLabel​(void * ptr​, GLsizei length​, const char * label​);
 ```
 第一种方法可以为所有的Objects设置Label，第二种为Sync Objects设置Label
 
 | Identifier    | Object Type  |
-| ------------- |:-------------:| 
-| GL_BUFFER	    | Buffer Object | 
-| GL_SHADER     | 	Shader Object | 
-| GL_PROGRAM    | 	Program Object | 
-| GL_VERTEX_ARRAY	 | Vertex Array Object | 
-| GL_QUERY	 | Query Object | 
-| GL_PROGRAM_PIPELINE | 	Program Pipeline Object | 
-| GL_TRANSFORM_FEEDBACK	 | Transform Feedback Object | 
-| GL_SAMPLER	 | Sampler Object | 
-| GL_TEXTURE	 | Texture Object | 
-| GL_RENDERBUFFER	 | Renderbuffer Object | 
-| GL_FRAMEBUFFER	 | Framebuffer Object | 
+| ------------- |:-------------:|
+| GL_BUFFER	    | Buffer Object |
+| GL_SHADER     | 	Shader Object |
+| GL_PROGRAM    | 	Program Object |
+| GL_VERTEX_ARRAY	 | Vertex Array Object |
+| GL_QUERY	 | Query Object |
+| GL_PROGRAM_PIPELINE | 	Program Pipeline Object |
+| GL_TRANSFORM_FEEDBACK	 | Transform Feedback Object |
+| GL_SAMPLER	 | Sampler Object |
+| GL_TEXTURE	 | Texture Object |
+| GL_RENDERBUFFER	 | Renderbuffer Object |
+| GL_FRAMEBUFFER	 | Framebuffer Object |
 
 查询设置Label的Objects
 ```
 void glGetObjectLabel​(GLenum identifier​, GLuint name​, GLsizei bufSize​,
                       GLsizei * length​, char * label​);
 
-void glGetObjectPtrLabel​(void * ptr​, GLsizei bufSize​, 
+void glGetObjectPtrLabel​(void * ptr​, GLsizei bufSize​,
                          GLsizei * length​, char * label​);
 ```
 

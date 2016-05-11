@@ -6,9 +6,7 @@ tags:
 
 ---
 # Introduction
-　　本文主要介绍怎么在GLFW3中使用AntTweakBar吗，旧版本的GLFW使用在AntTweakBar的Example中
-已经有了，所以在这里不作介绍。注意，程序是在OpenGL-Framework里面介绍的代码为基础的，如果有不了解的
-地方，请先阅读那一篇教程.
+　　本文主要介绍怎么在GLFW3中使用AntTweakBar吗，旧版本的GLFW使用在AntTweakBar的Example中已经有了，所以在这里不作介绍。注意，程序是在OpenGL-Framework里面介绍的代码为基础的，如果有不了解的地方，请先阅读那一篇教程.
 
 <!--more-->
 

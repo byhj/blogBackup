@@ -6,7 +6,6 @@ tags:
 ---
 
 # Devices and Queues
-
 <!--more-->
 
 ---

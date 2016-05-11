@@ -1,15 +1,15 @@
 title: 深度探索C++对象模型总结
 date: 2015-12-17 21:11:28
 tags: C++
-
+categories:
+   - C++
 ---
 C++对象模型主要解释为：
 - 语言中直接支持面向对象程序设计的部分
 - 对于各种支持的底层实现机制
 
 # 关于对象
-　　C语言中，数据和处理数据的操作时分开声明，而C++采用抽象数据类型进行操作。在C++加上封装并未带来
-布局成本，在布局以及存取时间上主要的额外负担是由virtual引起的：
+　　C语言中，数据和处理数据的操作时分开声明，而C++采用抽象数据类型进行操作。在C++加上封装并未带来布局成本，在布局以及存取时间上主要的额外负担是由virtual引起的：
 - virtual function 机制：用以支持一个有效率的“执行期绑定”。
 - virtual base blass : 用以实现“多次出现在继承体系中的base class, 有一个单一而被共享的实例”。
 - 多重继承下的一些额外负担。
@@ -19,9 +19,7 @@ C++对象模型主要解释为：
 ## C++对象模型
 - 简单对象模型：members本身不放在objects中，object存储指向member的指针。
 - 表格驱动对象模型：数据与操作分离为两个表格，object存储指向两个表格的指针。
-- C++对象模型：每一个class产生一堆指向virtual functions的指针，放在virtual table(vtbl)中，每一个class
-               object安插一个vptr指向相关的virtual table，每一个class关联的type_info objects信息。
-               vptr的设定和重置都由每一个class的constructor, destructor, copy assignment自动完成。
+- C++对象模型：每一个class产生一堆指向virtual functions的指针，放在virtual table(vtbl)中，每一个class object安插一个vptr指向相关的virtual table，每一个class关联的type_info objects信息。vptr的设定和重置都由每一个class的constructor, destructor, copy assignment自动完成。
 
 ## 关键词所带来的差异
 当一个人感觉到比较好的时候，使用struct取代class，注意struct在C++中的逻辑意义和如何正确使用。
@@ -49,9 +47,7 @@ C++以下列方式支持多态：
 # 构造函数语意学
 
 ## Default Constructor的构造操作
-default constructors在需要的时候被编译器产生出来，但需要注意的是这种需要时编译器方面的而不是程序的需要。
-一个由于为声明constructor函数而被隐式声明的default constructor将是一个trivial（无用） constructor，在某些情况
-编译器将会生成nontrivial default constructor.
+default constructors在需要的时候被编译器产生出来，但需要注意的是这种需要时编译器方面的而不是程序的需要。一个由于为声明constructor函数而被隐式声明的default constructor将是一个trivial（无用） constructor，在某些情况编译器将会生成nontrivial default constructor.
 
 - 带有Defulat Constructor 的Member Class Object：
   　　在constructor真正被调用生成，编译器在包含这样member的constructor中自动扩张，将member的constructor行为先进行

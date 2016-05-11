@@ -8,7 +8,6 @@ tags:
 # Introduction
 　　本文主要介绍Direct3D开发中使用的数学运算库。
 
-<!--more-->
 
 # Content
 
@@ -16,12 +15,13 @@ tags:
 　　这是Direct3D旧版本的数学运算库，主要有d3dx9math, d3dx10math.
 
 ## xnamath
-　　在DirectX11的SDK中包含了一个新的数学库xnamath，它主要是为XNA平台开发编写的，采用了
-SIMD提供运算效率，在PC程序开发中也可以使用。
+　　在DirectX11的SDK中包含了一个新的数学库xnamath，它主要是为XNA平台开发编写的，采用了SIMD提供运算效率，在PC程序开发中也可以使用。
 
 ## DirectXMath
-　　在Windows8.x之后DirectX SDK不再以单一组件形式提供，D3DXMath也已经被抛弃，微软推荐采用新使用C++编写的DirectXMath数学库，
-它可以看做xnamath的升级版本。
+　　在Windows8.x之后DirectX SDK不再以单一组件形式提供，D3DXMath也已经被抛弃，微软推荐采用新使用C++编写的DirectXMath数学库，它可以看做xnamath的升级版本。
+
+<!--more-->
+
 ```
 typedef _m128 XMVECTOR
 ```

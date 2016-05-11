@@ -1,12 +1,12 @@
 title: Direct3D12-HelloWorld
 date: 2015-12-18 12:37:51
 tags:
- - DirectX
+ - Direct3D
  - D3D12
-
 ---
 
 # Introduction
+
 
 <!--more-->
 

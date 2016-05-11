@@ -3,15 +3,16 @@ date: 2015-09-18 12:23:24
 tags:
      - DirectX
      - D3D
+categories: Direct3D
 ---
 
 # DirectX Pipeline
 ---
 
-<!--more-->
-
 ## DirectX9
 ![D3D9](http://7xlvtd.com1.z0.glb.clouddn.com/15-9-18/61135679.jpg)
+
+<!--more-->
 
 ---
 

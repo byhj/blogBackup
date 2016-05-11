@@ -201,7 +201,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: night
+highlight_theme: night bright
 
 
 # Automatically scroll page to section which is under <!-- more --> mark.
@@ -277,8 +277,8 @@ mathjax:
 duoshuo_info:
   ua_enable: true
   admin_enable: false
-  user_id: 0
-  #admin_nickname: Author
+  user_id: 6283239007203624000
+  admin_nickname: Admid~~
 
 
 # Facebook SDK Support.

@@ -5,9 +5,11 @@ tags: OpenGL
 ---
 OpenGL渲染流水线
 
-<!--more-->
+
 
 ![RenderingPipeline1](http://7xlvtd.com1.z0.glb.clouddn.com/OpenGLRenderingPipeline-1.png)
+
+<!--more-->
 
 ![RenderingPipeline2](http://7xlvtd.com1.z0.glb.clouddn.com/15-9-21/27893569.jpg)
 
@@ -60,7 +62,7 @@ OpenGL渲染流水线
 
 ## Blending
 
-## Logical Operations 
+## Logical Operations
 
 ## Masking operations
 
