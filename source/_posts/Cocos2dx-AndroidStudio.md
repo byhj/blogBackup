@@ -14,11 +14,9 @@ Windows10
 Cocos2dx3.9
 AndroidStudio1.3.2
 
-
-
 # 3.内容
 
-   Cocos2dx的环境配置安装官网上说的进行，下载所需要的sdk，在Cocos2dx 的build文件夹中用VS2015打开解决方案，编译链接程序。编译成功后使用Cocos控制台命令创建一个HelloWorld工程
+   Cocos2dx的环境配置安装官网上说的进行，下载所需要的sdk，在Cocos2dx 的build文件夹中用VS2015打开解决方案，编译链接程序。编译成功后使用Cocos控制台命令创建一个HelloWorld工程.
 
  <!--more-->
 ```

@@ -6,7 +6,7 @@ tags:
 ---
 
 # Introduction
-
+Direct 3D是基于微软的通用对象模式COM（Common Object Mode）的3D图形API。它是由微软（Microsoft）一手树立的3D API规范，微软公司拥有该库版权，它所有的语法定义包含在微软提供的程序开发组件的帮助文件、源代码中。Direct3D 12是新一代的图形API，使得图形开发人员能得到更加多的功能和效率。
 
 <!--more-->
 

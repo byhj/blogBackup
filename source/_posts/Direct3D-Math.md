@@ -8,7 +8,6 @@ tags:
 # Introduction
 　　本文主要介绍Direct3D开发中使用的数学运算库。
 
-
 # Content
 
 ## D3DXMath

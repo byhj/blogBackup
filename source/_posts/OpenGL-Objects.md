@@ -8,13 +8,13 @@ tags: OpenGL
 
 ---
 
-<!--more-->
-
 # Creation & Destruction
 
 ```
 void glGen*(GLsizei n, GLuint *objects)
 ```
+<!--more-->
+
  　　该函数创建n个对象名称(整数值引用)，返回指向这些objects的指针。在这一步，并不需要创建objects的状态数据。对于大多数object来说，在第一次绑定到上下文时，只包含其默认状态。在绑定前使用Objects是非法的。需要注意的是，Program Pipeline Ojbects和 Sampler Objects并不遵循这种运行机制。Object名称类型是GLuint, 它是一个数值型引用，用来识别一个object, 其中数值0在不同的Object中有着特定意义。（在OpenGL3.0之前，可以完全忽略上述的的分配函数,直接绑定认为合法的Ojbect名称）
 ```
 void glDelete*(GLsizei n​, const GLuint *objects​);

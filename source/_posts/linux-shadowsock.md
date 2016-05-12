@@ -10,8 +10,6 @@ tags:
 # VPS注册和安装
 　　Shadowsocks的正常使用需要服务端，其实所有的翻墙方式都需要服务端，搭建服务端需要你拥有一个属于自己的VPS。VPS提供商有很多，个人推荐[DigitalOcean](https://m.do.co/c/7049364a99a2), 注册和安装非常容易，可以绑定国内的银行卡。
 
-
-
 # Shadowsocks安装
 
 首先根据当前系统安装Shadowsocks:
