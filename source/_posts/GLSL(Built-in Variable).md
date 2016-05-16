@@ -1,6 +1,8 @@
 title: GLSL内置变量
 date: 2016-5-2 21:11:28
-tags: OpenGL GLSL
+tags:
+ - OpenGL
+ - GLSL
 
 ---
 　  GLSL定义了许多内置变量，这些变量一般被用于固定管线的运算，这里主要介绍下各个变量的内容与用法。

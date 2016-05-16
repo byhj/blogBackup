@@ -3,7 +3,7 @@ title: 使用Proxifier使得Shadowsocks本机程序进行代理
 date: 2016-05-11 21:06:52
 tags:
    - shadowsocks
-   - vpn
+   - VPN
 ---
 
 # 介绍：

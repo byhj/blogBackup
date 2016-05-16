@@ -3,6 +3,8 @@ title: 使用NShader在VS中语法高亮GLSL，HLSL等Shader文件
 date: 2016-05-12 09:13:49
 tags:
   - Shader
+  - GLSL
+  - HLSL
 
 ---
 # 介绍

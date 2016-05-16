@@ -1,6 +1,8 @@
 title: QT-static
 date: 2016-01-22 10:26:45
 tags: Qt静态编译-MSVC
+
+- Qt
 ---
 # Introduction
 

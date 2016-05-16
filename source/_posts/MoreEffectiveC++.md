@@ -1,6 +1,7 @@
 title: More Effective C++总结
 date: 2015-12-17 21:11:28
-tags: C++
+tags:
+ - C++
 
 ---
 # 基础议题

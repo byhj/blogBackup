@@ -1,7 +1,9 @@
 title: Movie
 date: 2015-10-06 11:20:32
 tags:
+   - Movie
 ---
+
 
 # Movie
 

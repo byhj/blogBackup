@@ -3,7 +3,7 @@ title: 使用VPS搭建Shadowsocks实现代理
 date: 2016-05-11 20:20:59
 tags:
    - Linux
-   - vpn
+   - VPN
 
 ---
 

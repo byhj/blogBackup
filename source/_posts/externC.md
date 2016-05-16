@@ -1,7 +1,9 @@
 ---
 title: extern "C"用法解析
 date: 2016-05-13 16:22:36
-tags: C C++
+tags:
+  - C
+  - C++
 ---
 
 # extern "C"
