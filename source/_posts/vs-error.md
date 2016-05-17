@@ -9,14 +9,16 @@ fatal error C1003: error count exceeds number; stopping compilation
 中文对照：（编译错误）错误太多，停止编译
 分析：修改之前的错误，再次编译
 ```
-fatal error C1004: unexpected end of file found
 
+fatal error C1004: unexpected end of file found
 中文对照：（编译错误）文件未结束
 分析：一个函数或者一个结构定义缺少“}”、或者在一个函数调用或表达式中括号没有配对出现、或者注释符“/*…*/”不完整等  
 
 fatal error C1083: Cannot open include file: 'xxx': No such file or directory
 中文对照：（编译错误）无法打开头文件xxx：没有这个文件或路径
 分析：头文件不存在、或者头文件拼写错误、或者文件为只读    
+
+<!--more-->
 
 fatal error C1903: unable to recover from previous error(s); stopping compilation
 中文对照：（编译错误）无法从之前的错误中恢复，停止编译
